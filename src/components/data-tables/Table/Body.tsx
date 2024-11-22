@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { IconClick } from "@tabler/icons-react";
@@ -44,7 +44,7 @@ const TableBodyRow = ({
   multiItemsSelected,
   limitOfMultiSelect,
   itemsSelectedCount,
-  setItemsSelectedCount
+  setItemsSelectedCount,
 }: TableBodyRowProps) => {
   const renderCell = (
     column: ITableColumn<any>,
@@ -53,9 +53,9 @@ const TableBodyRow = ({
     //=========== Refactor this after
     const verficationOfItems = () => {
       // Verify if the item is already selected
-      const isSelected = multiItemsSelected ? multiItemsSelected.some(
-        (selectedItem) => selectedItem.id === item.id
-      ) : false;
+      const isSelected = multiItemsSelected
+        ? multiItemsSelected.some((selectedItem) => selectedItem.id === item.id)
+        : false;
 
       if (multiItemsSelected.length === limitOfMultiSelect && !isSelected) {
         console.log("NO puedes seleccionar más elementos.");
@@ -102,10 +102,16 @@ const TableBodyRow = ({
       return (
         <Checkbox
           className="border-slate-500 data-[state=checked]:bg-brand-primary-lighter"
-          onClick={() => { multiItemsSelected ? verficationOfItems() : null }}
-          checked={multiItemsSelected ? multiItemsSelected.some(
-            (selectedItem) => selectedItem.id === item.id
-          ) : false}
+          onClick={() => {
+            multiItemsSelected ? verficationOfItems() : null;
+          }}
+          checked={
+            multiItemsSelected
+              ? multiItemsSelected.some(
+                  (selectedItem) => selectedItem.id === item.id
+                )
+              : false
+          }
           disabled={
             itemsSelectedCount === limitOfMultiSelect && !itemsSelectedCount
           }
@@ -145,7 +151,7 @@ export const TableBody = () => {
   );
 
   return (
-    <TableBodyUI className='bg-card'>
+    <TableBodyUI className="bg-card">
       {data.length ? (
         <TableBodyRow
           setMultiItemsSelected={setMultiItemsSelected}
