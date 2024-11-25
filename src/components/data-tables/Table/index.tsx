@@ -85,7 +85,7 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         if (!query[1]) return;
 
         queries.push({
-          field: !props.isFormatedUpperQueries
+          field: !props?.isFormatedUpperQueries
             ? camelToSnake(query[0])
             : query[0],
           text: query[1],
@@ -212,13 +212,13 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         ...item,
         isSelected: isChecked,
       }));
-      props.setMultiItemsSelected(selectedAllItems);
+      props?.setMultiItemsSelected(selectedAllItems);
     } else {
-      props.setMultiItemsSelected([]);
+      props?.setMultiItemsSelected([]);
     }
 
     setIsSelectedAllItems(isChecked);
-    props.onSelectAllItems(isChecked);
+    props?.onSelectAllItems(isChecked);
   };
 
   useEffect(() => setLocalData(props?.data || []), [props?.data]);
@@ -333,22 +333,22 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         prevPage,
         resetPage,
         searchForm,
-        isFormatedUpperQueries: props.isFormatedUpperQueries,
+        isFormatedUpperQueries: props?.isFormatedUpperQueries,
         updateLimit,
         showFilters,
         resetFilters,
         getGlobalFilters,
         selectOptionFilter,
         resetOptionsByFilter,
-        multiItemsSelected: props.multiItemsSelected,
-        setMultiItemsSelected: props.setMultiItemsSelected,
-        limitOfMultiSelect: props.limitOfMultiSelect,
+        multiItemsSelected: props?.multiItemsSelected,
+        setMultiItemsSelected: props?.setMultiItemsSelected,
+        limitOfMultiSelect: props?.limitOfMultiSelect,
         queries: localQueries,
         filters: localFilters,
         onSubmitTable: handleSubmit,
         getFilterOptionsSelectedById,
         getFiltersWithOptionsSelected,
-        setSelectItem: props.setSelectItem,
+        setSelectItem: props?.setSelectItem,
         setShowFilters: (value) => setShowFilters(value),
         setSearchForm: (searchForm) => setSearchForm(searchForm),
         onSelectAllItems: handleOnSelectAllItems,
