@@ -1,7 +1,8 @@
 {
-  "name": "d4t-ui-demo",
+  "name": "d4t-ui-b5n",
   "private": false,
-  "version": "1.16.15",
+  "author": "D4T Team",
+  "version": "1.0.2",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
