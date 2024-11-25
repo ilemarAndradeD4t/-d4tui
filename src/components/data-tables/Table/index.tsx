@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import type {
   ITablePagination,
@@ -39,6 +39,8 @@ interface CustomTableProps<DataSchema> {
   setMultiItemsSelected?: Dispatch<SetStateAction<any[]>>;
   multiItemsSelected?: any[];
   isFormatedUpperQueries?: boolean;
+  onSelectAllItems?: (value: boolean) => void;
+  isSelectedAllItems?: boolean;
 }
 
 const initialPagination: ITablePagination = {
@@ -63,6 +65,8 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
   const [localColumns, setLocalColumns] = useState<ITableColumn<DataSchema>[]>(
     props?.columns || []
   );
+  const [isMultiSelect, setIsMultiSelect] = useState(false);
+  const [isSelectedAllItems, setIsSelectedAllItems] = useState(false);
 
   const handleSubmit = useCallback(
     (params: ITableSubmitParams) => props.onSubmitTable({ ...params }),
@@ -81,7 +85,9 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         if (!query[1]) return;
 
         queries.push({
-          field: !props.isFormatedUpperQueries ? camelToSnake(query[0]) : query[0],
+          field: !props.isFormatedUpperQueries
+            ? camelToSnake(query[0])
+            : query[0],
           text: query[1],
         });
       });
@@ -184,11 +190,12 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
     setLocalFilters(filtersReseted);
   };
 
-  const updateLimit = (limit, page?: number) => updatePagination({ 
-    ...pagination, 
-    limit ,
-    page: page || pagination?.page
-  });
+  const updateLimit = (limit, page?: number) =>
+    updatePagination({
+      ...pagination,
+      limit,
+      page: page || pagination?.page,
+    });
 
   const resetFilters = () => {
     const filtersReseted = localFilters.map((filter) => ({
@@ -199,11 +206,46 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
     setLocalFilters(filtersReseted);
   };
 
+  const handleOnSelectAllItems = (isChecked) => {
+    if (isChecked) {
+      const selectedAllItems = props?.data?.map((item) => ({
+        ...item,
+        isSelected: isChecked,
+      }));
+      props.setMultiItemsSelected(selectedAllItems);
+    } else {
+      props.setMultiItemsSelected([]);
+    }
+
+    setIsSelectedAllItems(isChecked);
+    props.onSelectAllItems(isChecked);
+  };
+
   useEffect(() => setLocalData(props?.data || []), [props?.data]);
   useEffect(() => setLocalLoading(props?.loading), [props?.loading]);
   useEffect(() => setLocalError(props?.error || false), [props?.error]);
   useEffect(() => setPagination(props?.pagination), [props?.pagination]);
-  useEffect(() => setLocalColumns(props?.columns || []), [props?.columns]);
+  useEffect(() => {
+    const columnToMultiSelect: ITableColumn<DataSchema> = {
+      id: "multi-select",
+      label: "",
+    };
+
+    if (
+      props?.setMultiItemsSelected &&
+      props?.multiItemsSelected &&
+      props?.columns
+    ) {
+      setIsMultiSelect(true);
+      setLocalColumns([columnToMultiSelect, ...props?.columns]);
+    } else {
+      setLocalColumns(props?.columns || []);
+    }
+  }, [props?.columns]);
+  useEffect(() => {
+    if (props?.isSelectedAllItems && props?.data?.length)
+      handleOnSelectAllItems(props?.isSelectedAllItems);
+  }, [props?.isSelectedAllItems, props?.data]);
 
   // Extract Queries
   useEffect(() => {
@@ -309,6 +351,10 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         setSelectItem: props.setSelectItem,
         setShowFilters: (value) => setShowFilters(value),
         setSearchForm: (searchForm) => setSearchForm(searchForm),
+        onSelectAllItems: handleOnSelectAllItems,
+        isSelectedAllItems,
+        setIsMultiSelect,
+        isMultiSelect,
       }}
     >
       <div className="w-full h-fit space-y-4">
