@@ -24912,7 +24912,7 @@ function xq(e) {
       const Q = h.getValues(), L = [];
       (he = Object.entries(Q)) == null || he.forEach((ae) => {
         ae[1] && L.push({
-          field: e.isFormatedUpperQueries ? ae[0] : ua(ae[0]),
+          field: e != null && e.isFormatedUpperQueries ? ae[0] : ua(ae[0]),
           text: ae[1]
         });
       });
@@ -24974,10 +24974,10 @@ function xq(e) {
         ...ne,
         isSelected: H
       }));
-      e.setMultiItemsSelected(L);
+      e == null || e.setMultiItemsSelected(L);
     } else
-      e.setMultiItemsSelected([]);
-    N(H), e.onSelectAllItems(H);
+      e == null || e.setMultiItemsSelected([]);
+    N(H), e == null || e.onSelectAllItems(H);
   };
   return ee(() => n((e == null ? void 0 : e.data) || []), [e == null ? void 0 : e.data]), ee(() => p(e == null ? void 0 : e.loading), [e == null ? void 0 : e.loading]), ee(() => u((e == null ? void 0 : e.error) || !1), [e == null ? void 0 : e.error]), ee(() => g(e == null ? void 0 : e.pagination), [e == null ? void 0 : e.pagination]), ee(() => {
     const H = {
@@ -25040,22 +25040,22 @@ function xq(e) {
         prevPage: z,
         resetPage: G,
         searchForm: h,
-        isFormatedUpperQueries: e.isFormatedUpperQueries,
+        isFormatedUpperQueries: e == null ? void 0 : e.isFormatedUpperQueries,
         updateLimit: D,
         showFilters: i,
         resetFilters: W,
         getGlobalFilters: M,
         selectOptionFilter: I,
         resetOptionsByFilter: U,
-        multiItemsSelected: e.multiItemsSelected,
-        setMultiItemsSelected: e.setMultiItemsSelected,
-        limitOfMultiSelect: e.limitOfMultiSelect,
+        multiItemsSelected: e == null ? void 0 : e.multiItemsSelected,
+        setMultiItemsSelected: e == null ? void 0 : e.setMultiItemsSelected,
+        limitOfMultiSelect: e == null ? void 0 : e.limitOfMultiSelect,
         queries: a,
         filters: r,
         onSubmitTable: S,
         getFilterOptionsSelectedById: K,
         getFiltersWithOptionsSelected: V,
-        setSelectItem: e.setSelectItem,
+        setSelectItem: e == null ? void 0 : e.setSelectItem,
         setShowFilters: (H) => c(H),
         setSearchForm: (H) => m(H),
         onSelectAllItems: Y,
