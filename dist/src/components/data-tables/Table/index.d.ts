@@ -14,6 +14,8 @@ interface CustomTableProps<DataSchema> {
     setMultiItemsSelected?: Dispatch<SetStateAction<any[]>>;
     multiItemsSelected?: any[];
     isFormatedUpperQueries?: boolean;
+    onSelectAllItems?: (value: boolean) => void;
+    isSelectedAllItems?: boolean;
 }
 export declare function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>): import("react").JSX.Element;
 export {};

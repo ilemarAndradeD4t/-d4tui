@@ -121,5 +121,9 @@ export interface ITableContextStore<TData = any> {
     prevPage: () => void;
     resetPage: () => void;
     updateLimit: (limit: number, page?: number) => void;
+    onSelectAllItems?: (value: boolean) => void;
+    isSelectedAllItems?: boolean;
+    setIsMultiSelect: Dispatch<SetStateAction<boolean>>;
+    isMultiSelect: boolean;
 }
 export {};
