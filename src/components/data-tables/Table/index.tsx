@@ -218,7 +218,7 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
     }
 
     setIsSelectedAllItems(isChecked);
-    props?.onSelectAllItems(isChecked);
+    props?.onSelectAllItems && props?.onSelectAllItems(isChecked);
   };
 
   useEffect(() => setLocalData(props?.data || []), [props?.data]);
