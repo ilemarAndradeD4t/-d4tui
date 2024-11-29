@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconSearch } from "@tabler/icons-react";
@@ -10,6 +10,7 @@ import { Button, camelToSnake, Form, Spinner } from "../../";
 import { TableToolbar } from "./Toolbar";
 import { TableContext } from "./store";
 import { ITableSubmit } from "./types";
+import { parseURLSearchParams } from "./utils";
 
 interface TableSearchProps {
   onSubmitTable: ITableSubmit;
@@ -23,7 +24,7 @@ export const TableSearch = ({ onSubmitTable, loading }: TableSearchProps) => {
     filters,
     pagination: { page, limit },
     setSearchForm,
-    isFormatedUpperQueries
+    isFormatedUpperQueries,
   } = useContext(TableContext);
 
   const form = useForm<any>({
@@ -37,8 +38,8 @@ export const TableSearch = ({ onSubmitTable, loading }: TableSearchProps) => {
         queries.reduce((obj, item) => {
           obj[item.id] = z.string().optional();
           return obj;
-        }, {}),
-      ),
+        }, {})
+      )
     ),
   });
 
@@ -60,6 +61,19 @@ export const TableSearch = ({ onSubmitTable, loading }: TableSearchProps) => {
     console.log("queries formatted ", queries);
     onSubmitTable({ queries, filters: filtersSelected, limit, page });
   };
+
+  useEffect(() => {
+    const queriesFromUrl = {};
+    const searchQuery = parseURLSearchParams();
+
+    searchQuery.queries.forEach((item) => {
+      if (item.field && item.text) {
+        queriesFromUrl[item.field] = item.text;
+      }
+    });
+
+    form.reset(queriesFromUrl);
+  }, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => setSearchForm(form), [form]);

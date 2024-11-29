@@ -60,12 +60,19 @@ export interface ITableSubmitParams {
   page: number;
 }
 
+export interface ITableQueries {
+  queries: { text: string; field: string }[];
+  filters: ITableFilter[];
+  limit: number;
+  page: number;
+}
+
 export type ITableSubmit = ({
   page,
   limit,
   queries,
   filters,
-}: ITableSubmitParams) => Promise<void>;
+}: ITableQueries) => Promise<void>;
 
 export interface IInitialTable<TData = any> {
   data: TData[] | [];

@@ -5,8 +5,8 @@ import type {
   ITableColumn,
   ITableFilter,
   ITableSubmit,
-  ITableSubmitParams,
   ITableDynamicFilter,
+  ITableQueries,
 } from "./types";
 import {
   Dispatch,
@@ -24,7 +24,12 @@ import { TableLoading } from "./Loading";
 import { TableSearch } from "./Search";
 import { TableError } from "./Error";
 import { TableEmpty } from "./Empty";
-import { camelToSnake } from "./utils";
+import {
+  camelToSnake,
+  newFiltersBasedInUrlSearch,
+  parseURLSearchParams,
+  updateSearchInUrl,
+} from "./utils";
 
 interface CustomTableProps<DataSchema> {
   data: DataSchema[];
@@ -69,7 +74,10 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
   const [isSelectedAllItems, setIsSelectedAllItems] = useState(false);
 
   const handleSubmit = useCallback(
-    (params: ITableSubmitParams) => props.onSubmitTable({ ...params }),
+    (params: ITableQueries) => {
+      updateSearchInUrl(params);
+      return props.onSubmitTable({ ...params });
+    },
     [props]
   );
 
@@ -280,7 +288,18 @@ export function D4TTable<DataSchema>(props: CustomTableProps<DataSchema>) {
         return toReturn;
       });
 
-    setLocalFilters(filters);
+    // Agregar valores por default to filters in ui
+    const searchQuery = parseURLSearchParams();
+
+    const newFilters = newFiltersBasedInUrlSearch(searchQuery, filters);
+
+    const thereAreFiltersSelected = newFilters.some(({ options }) => {
+      return options.some(({ selected }) => selected);
+    });
+
+    setShowFilters(thereAreFiltersSelected);
+
+    setLocalFilters(newFilters);
   }, [localColumns]);
 
   // Extract Dynamic Filters

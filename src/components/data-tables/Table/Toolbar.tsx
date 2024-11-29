@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import React, { useContext } from "react";
-import { Button, camelToSnake } from "../../";
+import { Button, camelToSnake } from "d4t-ui-b5n";
 import { X } from "lucide-react";
 
 import { TableContext } from "./store";
@@ -24,7 +24,7 @@ export const TableToolbar = ({ form, onSubmit }: IToolbarProps) => {
     resetFilters,
     onSubmitTable,
     pagination: { page, limit },
-    isFormatedUpperQueries
+    isFormatedUpperQueries,
   } = useContext(TableContext);
   const watchFields = form.watch(queries.map((item) => item.id));
 
@@ -85,9 +85,9 @@ export const TableToolbar = ({ form, onSubmit }: IToolbarProps) => {
                 />
               ))}
             {showFilters &&
-              filters?.filter((filter) =>
-                filter.options.some((option) => option.selected),
-              ).length ? (
+            filters?.filter((filter) =>
+              filter.options.some((option) => option.selected)
+            ).length ? (
               <Button
                 type="button"
                 variant="ghost"
