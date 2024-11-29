@@ -1,4 +1,4 @@
-import { ITablePagination, ITableColumn } from './types';
+import { ITablePagination, ITableColumn, ITableQueries, ITableFilter } from './types';
 
 export interface DataToFormat {
     __typename?: string;
@@ -17,3 +17,6 @@ export declare const initialPagination: {
 };
 export declare const generateUUID: () => any;
 export declare const insertColumn: (newColumn: ITableColumn<any>, originalColumn: ITableColumn<any>[]) => ITableColumn<any>[];
+export declare function updateSearchInUrl(params: ITableQueries): void;
+export declare const parseURLSearchParams: () => ITableQueries;
+export declare function newFiltersBasedInUrlSearch(original: ITableQueries, newFilters: ITableFilter[]): ITableFilter[];

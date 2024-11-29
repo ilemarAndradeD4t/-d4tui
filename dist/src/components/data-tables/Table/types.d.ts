@@ -49,7 +49,16 @@ export interface ITableSubmitParams {
     limit: number;
     page: number;
 }
-export type ITableSubmit = ({ page, limit, queries, filters, }: ITableSubmitParams) => Promise<void>;
+export interface ITableQueries {
+    queries: {
+        text: string;
+        field: string;
+    }[];
+    filters: ITableFilter[];
+    limit: number;
+    page: number;
+}
+export type ITableSubmit = ({ page, limit, queries, filters, }: ITableQueries) => Promise<void>;
 export interface IInitialTable<TData = any> {
     data: TData[] | [];
     filters: ITableFilter[];

@@ -10,5 +10,5 @@ interface FacetedFilterProps {
     options: ITableFilterOption[];
     onSubmit: any;
 }
-export declare const FacetedFilter: ({ id, form, icon, label, options, onSubmit }: FacetedFilterProps) => import("react").JSX.Element;
+export declare const FacetedFilter: ({ id, form, icon, label, options, }: FacetedFilterProps) => import("react").JSX.Element;
 export {};

@@ -8,5 +8,5 @@ interface SearchQueryProps {
     icon?: ReactNode;
     queryText: string;
 }
-export declare const SearchQuery: ({ id, form, label, icon, queryText }: SearchQueryProps) => import("react").JSX.Element;
+export declare const SearchQuery: ({ id, form, label, queryText, }: SearchQueryProps) => import("react").JSX.Element;
 export {};
